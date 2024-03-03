@@ -70,7 +70,7 @@ void loop(){
     Serial.print(test);
 
     // Check for shapes!
-    if(test.equals("SQUARE")){
+    if(test.equals("SQUARE\n")){
       drawSquare(); // Execute macro
     } // TO DO: add more shapes....
 
