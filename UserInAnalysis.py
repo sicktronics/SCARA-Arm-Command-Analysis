@@ -46,10 +46,14 @@ command = ''
 
 ''' ESTABLISH ARDUINO CONNECTION '''
 # Setting up the Arduino serial connection!
-arduino = serial.Serial(port='COM6', baudrate=115200, timeout=.1)
+arduino = serial.Serial(port='COM9', baudrate=115200, timeout=.1)
 
 # Give the connection time to establish
 time.sleep(5)
+
+# In case use shapes later:
+# sg.Button('CIRCLE', image_source="../circle.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)), 
+# sg.Button('STAR', image_source="../star.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)),
 
 ''' SET UP UI '''
 # Setting the GUI theme
@@ -65,9 +69,7 @@ layout = [
             [sg.Frame(title='Shape Selection', layout=[ 
                 [sg.Button('SQUARE', image_source="../square.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)), 
                  sg.Button('TRIANGLE', image_source="../triangle.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)), 
-                 sg.Button('CIRCLE', image_source="../circle.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)), 
-                 sg.Button('HEXAGON', image_source="../hexagon.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)), 
-                 sg.Button('STAR', image_source="../star.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)),]
+                 sg.Button('HEXAGON', image_source="../hexagon.PNG", image_subsample=subs_size, image_size=(im_dim, im_dim)),]
             ])],
             # This frame is responsible for utensil selection (equivalent internally to using the "M06" command)
             [sg.Frame(title='Utensil Selection', layout=[

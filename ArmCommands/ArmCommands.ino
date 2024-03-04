@@ -83,6 +83,12 @@ void loop(){
     // Check for shapes!
     if(test.equals("SQUARE\n")){
       drawSquare(); // Execute macro
+    }
+    if(test.equals("TRIANGLE\n")){
+      drawTriangle(); // Execute macro
+    } // TO DO: add more shapes....
+    if(test.equals("HEXAGON\n")){
+      drawHexagon(); // Execute macro
     } // TO DO: add more shapes....
 
     // Add each character of the string to the buffer
@@ -189,11 +195,48 @@ void processCommand(){
 }
 
 // Macro for drawing a square...feeds coordinates to line function.
+
+// IN MM
 void drawSquare(){
-  line(100, 200);
-  line(200, 200);
-  line(200, 100);
-  line(100, 100);
+  line(0.0, 0.0);
+  line(50.0, 50.0);
+  line(50.0, 100.0);
+  line(100.0, 100.0);
+  line(100.0, 50.0);
+  line(0.0, 0.0);
+
+  // Theoretically, positions should be the same after completing the square
+  Serial.print("Current x position: ");
+  Serial.print(px);
+  Serial.print(" Current y position: ");
+  Serial.print(py);
+}
+void drawTriangle(){
+  line(0.0, 0.0);
+  line(50.0, 50.0);
+  line(75.0, 100.0);
+  line(100.0, 50.0);
+  line(50.0, 50.0);
+  line(0.0, 0.0);
+  // Theoretically, positions should be the same after completing the square
+  Serial.print("Current x position: ");
+  Serial.print(px);
+  Serial.print(" Current y position: ");
+  Serial.print(py);
+}
+// See parker's notes for math
+void drawHexagon(){
+  line(0.0, 0.0);
+  line(50.0, 50.0);
+  line(50.0, 86.6);
+  line(0.0, 173.2);
+  line(50.0, 259.8);
+  line(150.0, 259.8);
+  line(200.0, 173.2);
+  line(150.0, 86.6);
+  line(50.0, 86.6);
+  line(0.0, 0.0);
+
   // Theoretically, positions should be the same after completing the square
   Serial.print("Current x position: ");
   Serial.print(px);
