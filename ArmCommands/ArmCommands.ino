@@ -1,10 +1,21 @@
 #include <AFMotor.h>
 #include <Servo.h>
+#include <math.h>
+// #include <fmt.h>
 
 // Setting up two stepper motors and a servo
+
+// for num steps: 360/degrees per step
 AF_Stepper m1(200,1);
 AF_Stepper m2(200,2);
+int m1_steps = 0;
+int m2_steps = 0;
+float m1_angle = 0.0;
+float m2_angle = 0.0;
+
 Servo myservo;
+float len1 = 10.0;
+float len2 = 10.0;
 
 /*
 * Parker Mayer
@@ -33,7 +44,7 @@ int sofar;             // How much is in the buffer
 #define MAX_FEEDRATE (100.0)
 float fr = 100.0;           // Current feedrate
 float nfr = 50.0;           // New feedrate
-int mode_abs=0;             // Whether the current mode is absolute or relative
+int mode_abs=1;             // Whether the current mode is absolute or relative (absolute by default)
 float px = 0.0;             // x, y position
 float py = 0.0;
 long step_delay=1000000.0/fr; // Delay between step commands
@@ -192,6 +203,9 @@ void drawSquare(){
 
 // MOVEMENT ALGORITHM
 
+// Supporting functions
+
+
 /*
   Using Bresenham's line algorithm to move both motors 
   @input newx the destination x position
@@ -200,6 +214,8 @@ void drawSquare(){
   NOTE: Need to port to Inverse Kinematics for SCARA arm
 */
 void line(float newx, float newy){
+
+  // CHANGE : Old to new VVV
   long dx=newx-px;      // x, y positional difference
   long dy=newy-py;
   int dirx=dx > 0?1:-1; // direction to move
@@ -335,20 +351,4 @@ void servoMove(int uten){
   Serial.print(current);
 }
 
-/*Display menu info -- ONLY FOR TESTING WITHOUT SERIAL CONNECTION */
-// void displayMenu(){
-//   Serial.print(F("2 Axis Scara Arm ")); // F stores string in prog mem instead of RAM
-//   Serial.println(VERSION);
-//   Serial.println(F("COMMANDS"));
-//   Serial.println(F("Rapid Positioning: G00 X{x_coord} Y{y_coord}"));
-//   Serial.println(F("Linear Interpolation: G01 X{x_coord} Y{y_coord} F{speed}"));
-//   Serial.println(F("Absolute Positioning: G90"));
-//   Serial.println(F("Relative Positioning: G91"));
-//   Serial.println(F("Set Units to Inches: G20"));
-//   Serial.println(F("Set Units to Millimeters: G21"));
-//   Serial.println(F("End the Program: M02"));
-//   Serial.println(F("Change Writing Utensil: M06-{tool_#}"));
-//   Serial.println(F("Save Current State: M70"));
-//   Serial.println(F("Restore Saved State: M72"));
-// }
 
