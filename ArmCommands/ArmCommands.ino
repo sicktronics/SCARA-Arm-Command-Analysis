@@ -14,8 +14,9 @@ float m1_angle = 0.0;
 float m2_angle = 0.0;
 
 Servo myservo;
-float len1 = 10.0;
-float len2 = 10.0;
+// Need to use mm
+float len1 = 100.0;
+float len2 = 100.0;
 
 /*
 * Parker Mayer
@@ -45,6 +46,7 @@ int sofar;             // How much is in the buffer
 float fr = 100.0;           // Current feedrate
 float nfr = 50.0;           // New feedrate
 int mode_abs=1;             // Whether the current mode is absolute or relative (absolute by default)
+int mode_mm=1;              // Whether the units are mm or in (mm by default)
 float px = 0.0;             // x, y position
 float py = 0.0;
 long step_delay=1000000.0/fr; // Delay between step commands
@@ -159,11 +161,13 @@ void processCommand(){
 
     // G90 - absolute mode
     case 90: mode_abs=1; break;
-    // G91 - relative mode
-    case 91: mode_abs=0; break;
+    // G91 - relative mode - TO DO: account for relative mode in the program
+    case 91: mode_abs=1; break;
 
     // TO DO: fill in G20
-    // TO DO: fill in G21
+    case 20: break; // TO DO: account for inches
+    // G21 - unit is mm
+    case 21: mode_mm=1; break;
 
     default: break;
   }
@@ -171,15 +175,17 @@ void processCommand(){
   // Look for commands that start with an "M"
   cmd=parsenumber('M',-1);
   switch(cmd){
-    // TO DO: M02
-    // TO DO: M06
-    // TO DO: M70
-    // TO DO: M72
+    // M02 - shut down
+    case 2:
+      servoMove(1);
+      line(05.0, 05.0);
+    // M06 - switch utensil
     case 6: // Switch utensil
       // Determine whether pen, pencil, or crayon via T-code
       int whichUtensil = parsenumber('T',-1);
       servoMove(whichUtensil);
       break;
+    // M18 - release motors
     case 18:
       // release motor 1
       m1.release();
@@ -187,6 +193,13 @@ void processCommand(){
       m2.release();
       Serial.print("Release the motors!");
       break;
+    // M72 - Restore system defaults
+    case 72:
+      mode_abs=1;
+      mode_mm=1;
+      Serial.print("Restore system default seetings! (Mode: absolute. Units: mm)");
+      break;
+
     default: 
       break;
   }

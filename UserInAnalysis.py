@@ -91,8 +91,7 @@ layout = [
                             \nSet Units to Millimeters: G21
                             \nEnd the Program: M02
                             \nChange Writing Utensil: M06 T{tool_#}
-                            \nSave Current State: M70
-                            \nRestore Saved State: M72''')]
+                            \nRestore Default Settings: M72''')]
             ])],
         ]
 
